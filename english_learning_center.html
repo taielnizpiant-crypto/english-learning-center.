@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Learning Center</title>
+<style>
+:root{--green:#1e6b50;--green2:#2d8a68;--ink:#18352c;--muted:#718078;--cream:#f5f7f3;--line:#e4eae4;--white:#fff;--yellow:#f1c75b;--shadow:0 12px 32px rgba(24,53,44,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.app{max-width:1180px;margin:auto;padding:24px}
+.hero{background:linear-gradient(120deg,#173c30,#23674d 65%,#2f8060);color:white;border-radius:26px;padding:30px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero:after{content:"EN";position:absolute;right:22px;bottom:-55px;font-size:190px;font-weight:900;color:rgba(255,255,255,.055);letter-spacing:-15px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;position:relative;z-index:1}
+.eyebrow{font-size:11px;letter-spacing:2px;font-weight:800;color:#c4e3d2}
+.pill{border:1px solid rgba(255,255,255,.25);border-radius:99px;padding:6px 11px;font-size:11px;color:#e8f5ec}
+h1{font-size:clamp(32px,5vw,54px);line-height:1.03;letter-spacing:-2px;margin:28px 0 10px;position:relative;z-index:1}
+.hero p{max-width:560px;color:#d7e9df;margin:0;position:relative;z-index:1}
+.hero-bottom{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;position:relative;z-index:1}
+.hero-tag{background:rgba(255,255,255,.12);padding:8px 12px;border-radius:10px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
+.stat,.panel,.week-card{background:var(--white);border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 16px rgba(24,53,44,.035)}
+.stat{padding:17px}.stat-label{font-size:12px;color:var(--muted)}.stat-num{font-size:27px;font-weight:800;letter-spacing:-1px;margin-top:3px}.stat-icon{float:right;font-size:19px}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.8fr);gap:18px;align-items:start}
+.panel{padding:20px;margin-bottom:16px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+h2{font-size:19px;margin:0;letter-spacing:-.4px}h3{font-size:15px;margin:0}
+.sub{font-size:12px;color:var(--muted);margin:4px 0 0}
+.progress-track{height:9px;background:#edf1ed;border-radius:99px;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),#69b58d);border-radius:99px;transition:width .25s}
+.progress-row{display:flex;justify-content:space-between;font-size:12px;margin:13px 0 7px;color:var(--muted)}
+.module-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.module{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;min-height:105px}
+.module .emoji{font-size:21px}.module strong{display:block;margin:5px 0 2px}.module small{color:var(--muted)}
+.week-list{display:grid;gap:10px}
+.week-card{overflow:hidden;box-shadow:none}
+.week-toggle{width:100%;border:0;background:white;padding:15px 16px;display:flex;align-items:center;gap:12px;text-align:left;color:var(--ink)}
+.week-number{width:36px;height:36px;border-radius:11px;background:#eaf3ed;color:var(--green);display:grid;place-items:center;font-weight:800;font-size:12px;flex:none}
+.week-info{flex:1;min-width:0}.week-info strong{display:block}.week-info small{color:var(--muted)}
+.week-percent{font-size:12px;color:var(--green);font-weight:800}.chev{color:var(--muted);transition:transform .2s}
+.week-card.open .chev{transform:rotate(180deg)}
+.lesson-list{display:none;border-top:1px solid var(--line);padding:6px 14px 12px}.week-card.open .lesson-list{display:block}
+.lesson{display:flex;gap:10px;align-items:flex-start;padding:10px 2px;border-bottom:1px solid #f0f3f0}.lesson:last-child{border:0}
+.lesson input{accent-color:var(--green);width:17px;height:17px;margin:3px 0 0;flex:none}
+.lesson label{cursor:pointer;flex:1}.lesson .day{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#87948b;font-weight:800}.lesson .topic{font-size:13px;font-weight:600}.lesson.done .topic{text-decoration:line-through;color:#94a098}
+.challenge{margin-top:10px;background:#f1f6f1;border-radius:12px;padding:12px;font-size:12px;color:#486456}
+.resources{display:grid;gap:10px}.resource{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);padding:10px;border:1px solid var(--line);border-radius:12px}.resource:hover{background:#f7faf7}.resource-icon{width:34px;height:34px;border-radius:10px;background:#edf5ef;display:grid;place-items:center;font-size:17px}.resource small{display:block;color:var(--muted);font-size:11px}
+.timer{text-align:center;background:#f2f7f2;border-radius:15px;padding:17px}.clock{font-size:38px;font-weight:800;letter-spacing:1px;margin:5px 0 10px;font-variant-numeric:tabular-nums}.btn{border:0;border-radius:10px;padding:9px 13px;background:var(--green);color:white;font-weight:700;font-size:12px}.btn.secondary{background:white;color:var(--green);border:1px solid #dce8de}.btn-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+textarea{width:100%;min-height:100px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:11px;color:var(--ink);background:#fff;outline:none}textarea:focus{border-color:#83b99a}
+.tip{font-size:12px;color:var(--muted);line-height:1.6}.footer{text-align:center;color:#89958d;font-size:11px;padding:18px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.app{padding:14px}.hero{padding:24px}.hero:after{font-size:130px;right:5px}.panel{padding:16px}}
+@media(max-width:420px){.stats{gap:9px}.stat{padding:13px}.stat-num{font-size:23px}.module-grid{gap:8px}.module{padding:11px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero">
+  <div class="topline"><span class="eyebrow">PERSONAL LANGUAGE LAB</span><span class="pill">12-WEEK PROGRAM · ENGLISH</span></div>
+  <h1>Your English<br>journey starts here.</h1>
+  <p>Build confidence, speak more naturally and understand real conversations — one focused session at a time.</p>
+  <div class="hero-bottom"><span class="hero-tag">✦ Intermediate level</span><span class="hero-tag">◷ 15 minutes a day</span><span class="hero-tag">◎ Speaking first</span></div>
+</header>
+
+<section class="stats">
+  <div class="stat"><span class="stat-icon">📅</span><div class="stat-label">Study weeks</div><div class="stat-num">12</div></div>
+  <div class="stat"><span class="stat-icon">📘</span><div class="stat-label">Total lessons</div><div class="stat-num">72</div></div>
+  <div class="stat"><span class="stat-icon">⏱️</span><div class="stat-label">Daily focus</div><div class="stat-num">15 min</div></div>
+  <div class="stat"><span class="stat-icon">🎯</span><div class="stat-label">Main goal</div><div class="stat-num">Fluency</div></div>
+</section>
+
+<div class="layout">
+<main>
+  <section class="panel">
+    <div class="section-head"><div><h2>Your progress</h2><p class="sub">Tick off each lesson as you complete it.</p></div><strong id="percentText">0%</strong></div>
+    <div class="progress-track"><div class="progress-fill" id="overallBar"></div></div>
+    <div class="progress-row"><span id="completedText">0 of 72 lessons completed</span><span id="remainingText">72 to go</span></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><div><h2>Your learning modules</h2><p class="sub">The skills we'll train throughout the program.</p></div></div>
+    <div class="module-grid">
+      <div class="module"><span class="emoji">🗣️</span><strong>Speaking</strong><small>Speak with confidence and less hesitation.</small></div>
+      <div class="module"><span class="emoji">🎧</span><strong>Listening</strong><small>Understand natural speech and accents.</small></div>
+      <div class="module"><span class="emoji">🧠</span><strong>Vocabulary</strong><small>Learn useful phrases and collocations.</small></div>
+      <div class="module"><span class="emoji">✍️</span><strong>Grammar in context</strong><small>Use grammar naturally while communicating.</small></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><div><h2>12-week learning path</h2><p class="sub">Six lessons per week · Sunday is your rest day.</p></div><span class="pill" style="color:var(--green);border-color:var(--line)">72 LESSONS</span></div>
+    <div class="week-list" id="weekList"></div>
+  </section>
+</main>
+
+<aside>
+  <section class="panel">
+    <div class="section-head"><div><h2>Today's 15 minutes</h2><p class="sub">A simple structure for every session.</p></div></div>
+    <div class="timer">
+      <div class="sub">FOCUS TIMER</div><div class="clock" id="clock">15:00</div>
+      <div class="btn-row"><button class="btn" id="startTimer">Start</button><button class="btn secondary" id="resetTimer">Reset</button></div>
+    </div>
+    <div style="margin-top:15px;display:grid;gap:10px">
+      <div><div class="progress-row"><b>Vocabulary</b><span>3 min</span></div><div class="progress-track"><div class="progress-fill" style="width:20%"></div></div></div>
+      <div><div class="progress-row"><b>Listening</b><span>4 min</span></div><div class="progress-track"><div class="progress-fill" style="width:27%"></div></div></div>
+      <div><div class="progress-row"><b>Speaking</b><span>5 min</span></div><div class="progress-track"><div class="progress-fill" style="width:33%"></div></div></div>
+      <div><div class="progress-row"><b>Correction & review</b><span>3 min</span></div><div class="progress-track"><div class="progress-fill" style="width:20%"></div></div></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><div><h2>Teacher's toolkit</h2><p class="sub">Useful resources for independent practice.</p></div></div>
+    <div class="resources">
+      <a class="resource" href="https://www.bbc.co.uk/learningenglish" target="_blank" rel="noopener"><span class="resource-icon">📻</span><span><b>BBC Learning English</b><small>Lessons, listening and vocabulary</small></span></a>
+      <a class="resource" href="https://youglish.com/" target="_blank" rel="noopener"><span class="resource-icon">🗣️</span><span><b>YouGlish</b><small>Hear words in real videos</small></span></a>
+      <a class="resource" href="https://apps.ankiweb.net/" target="_blank" rel="noopener"><span class="resource-icon">🗂️</span><span><b>Anki</b><small>Review vocabulary with flashcards</small></span></a>
+      <a class="resource" href="https://www.youtube.com/@EasyEnglishVideos" target="_blank" rel="noopener"><span class="resource-icon">🎬</span><span><b>Easy English</b><small>Interviews and everyday English</small></span></a>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><div><h2>My learning notes</h2><p class="sub">Write down new phrases, questions or mistakes.</p></div></div>
+    <textarea id="notes" placeholder="Today I learned...&#10;A phrase I want to remember...&#10;Something I need to practice..."></textarea>
+    <p class="tip" style="margin-bottom:0">Your notes and completed lessons are saved in this browser on this device.</p>
+  </section>
+
+  <section class="panel">
+    <h2>How to study with your AI teacher</h2>
+    <p class="tip">When you're ready, return to ChatGPT and type <b>START ENGLISH</b>. I'll guide you through the next lesson, ask you questions, listen to your answers and correct your mistakes.</p>
+    <button class="btn secondary" style="width:100%" onclick="navigator.clipboard?.writeText('START ENGLISH')">Copy “START ENGLISH”</button>
+  </section>
+</aside>
+</div>
+<div class="footer">ENGLISH LEARNING CENTER · Small steps, real progress.</div>
+</div>
+
+<script>
+const weeks = [
+["Building fluency",[
+"Introducing yourself naturally and talking about your life","Listening to everyday conversations","Talking about personal experiences","Connecting ideas with linking words","Describing your personality and interests","Speaking challenge: Talk about yourself for 2 minutes"]],
+["Everyday conversations",[
+"Common expressions and natural phrases","Understanding informal conversations","Asking questions and keeping conversations going","Present simple vs. present continuous","Talking about routines and habits","Speaking challenge: Describe your typical day"]],
+["Past experiences",[
+"Talking about memorable experiences","Listening to stories in the past","Telling stories in chronological order","Past simple vs. present perfect","Describing achievements and experiences","Speaking challenge: Tell an interesting story"]],
+["Opinions and ideas",[
+"Expressing opinions naturally","Listening to different points of view","Agreeing and disagreeing politely","Giving reasons and explanations","Discussing everyday topics","Monthly challenge: Have a 5-minute conversation"]],
+["Thinking in English",[
+"Describing thoughts and feelings","Listening without translating every word","Explaining your ideas spontaneously","Modal verbs: should, must, might and could","Making decisions and giving advice","Speaking challenge: Explain a personal decision"]],
+["Real-life situations",[
+"Ordering food and communicating in restaurants","Understanding conversations in public places","Asking for information and clarification","Conditionals in everyday situations","Solving problems and making requests","Speaking challenge: Simulate a day abroad"]],
+["Expanding vocabulary",[
+"Phrasal verbs in everyday English","Understanding phrasal verbs in context","Common collocations and expressions","Word choice and natural sentence structures","Describing situations with precise vocabulary","Speaking challenge: Use 10 new expressions naturally"]],
+["Storytelling",[
+"Telling stories with confidence","Listening to longer stories","Describing events and emotions","Past perfect and narrative structures","Explaining what happened and why","Monthly challenge: Tell a 5-minute story"]],
+["Debates and discussions",[
+"Discussing social and everyday topics","Understanding arguments and opinions","Supporting your ideas with examples","Advanced connectors and discourse markers","Agreeing, disagreeing and debating","Speaking challenge: Defend your opinion"]],
+["Pronunciation and listening",[
+"Word stress and sentence rhythm","Understanding connected speech","Practicing difficult sounds","Intonation and natural pronunciation","Listening to different English accents","Speaking challenge: Record and evaluate yourself"]],
+["Spontaneous conversations",[
+"Answering unexpected questions","Using fillers naturally: well, actually, you know","Keeping conversations alive","Rephrasing when you don't know a word","Talking about abstract topics","Speaking challenge: 5 minutes without a script"]],
+["Final preparation",[
+"Review of vocabulary and expressions","Review of grammar in context","Listening comprehension challenge","Spontaneous conversation practice","Reading, listening and speaking assessment","Final evaluation and next learning goals"]]
+];
+const storageKey="englishLearningCenter_v1";
+let state={done:{},notes:""};
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||"{}");state={...state,...saved};}catch(e){}
+const dayNames=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const weekList=document.getElementById("weekList");
+weeks.forEach((week,wi)=>{
+ const card=document.createElement("div");card.className="week-card"+(wi===0?" open":"");card.dataset.week=wi;
+ const toggle=document.createElement("button");toggle.className="week-toggle";
+ toggle.innerHTML=`<span class="week-number">W${String(wi+1).padStart(2,"0")}</span><span class="week-info"><strong>Week ${wi+1} · ${week[0]}</strong><small>6 lessons · ${wi<4?"Building fluency":wi<8?"Natural communication":"Confident speaking"}</small></span><span class="week-percent" id="weekpct${wi}">0/6</span><span class="chev">⌄</span>`;
+ toggle.addEventListener("click",()=>card.classList.toggle("open"));card.appendChild(toggle);
+ const list=document.createElement("div");list.className="lesson-list";
+ week[1].forEach((topic,di)=>{
+  const id=`w${wi+1}d${di+1}`;const row=document.createElement("div");row.className="lesson"+(state.done[id]?" done":"");
+  const check=document.createElement("input");check.type="checkbox";check.id=id;check.checked=!!state.done[id];
+  const label=document.createElement("label");label.htmlFor=id;label.innerHTML=`<span class="day">Day ${wi*6+di+1} · ${dayNames[di]}</span><span class="topic">${topic}</span>`;
+  check.addEventListener("change",()=>{state.done[id]=check.checked;row.classList.toggle("done",check.checked);save();updateProgress();});
+  row.append(check,label);list.appendChild(row);
+ });
+ const challenge=document.createElement("div");challenge.className="challenge";challenge.innerHTML=`<b>Weekly focus:</b> Use this week's language in a real conversation. Don't aim for perfect English — aim to communicate.`;
+ list.appendChild(challenge);card.appendChild(list);weekList.appendChild(card);
+});
+function save(){localStorage.setItem(storageKey,JSON.stringify(state));}
+function updateProgress(){
+ let total=0;weeks.forEach((w,wi)=>{let n=0;w[1].forEach((_,di)=>{if(state.done[`w${wi+1}d${di+1}`])n++;});total+=n;document.getElementById(`weekpct${wi}`).textContent=`${n}/6`;});
+ const pct=Math.round(total/72*100);document.getElementById("percentText").textContent=pct+"%";document.getElementById("overallBar").style.width=pct+"%";document.getElementById("completedText").textContent=`${total} of 72 lessons completed`;document.getElementById("remainingText").textContent=`${72-total} to go`;
+}
+updateProgress();
+const notes=document.getElementById("notes");notes.value=state.notes||"";notes.addEventListener("input",()=>{state.notes=notes.value;save();});
+let remaining=900,interval=null;const clock=document.getElementById("clock"),start=document.getElementById("startTimer");
+function renderClock(){clock.textContent=String(Math.floor(remaining/60)).padStart(2,"0")+":"+String(remaining%60).padStart(2,"0");}
+start.addEventListener("click",()=>{if(interval){clearInterval(interval);interval=null;start.textContent="Resume";return;}start.textContent="Pause";interval=setInterval(()=>{remaining--;renderClock();if(remaining<=0){clearInterval(interval);interval=null;start.textContent="Start again";alert("Great work! Your 15-minute session is complete.");}},1000);});
+document.getElementById("resetTimer").addEventListener("click",()=>{clearInterval(interval);interval=null;remaining=900;renderClock();start.textContent="Start";});
+</script>
+</body>
+</html>
